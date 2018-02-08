@@ -1,0 +1,120 @@
+@import 'general/imports';
+
+
+$button_label_fontSize: 12px;
+$button_label_padding: 5px;
+$wrapper_minWidth: 100px;
+$wrapper_maxWidth: 200px;
+
+$button_arrow_width: 15px;
+
+$dropdown_padding: 0px;
+
+$option_padding: 5px;
+$option_fontSize: 12px;
+
+.e-select{
+    
+    &-autoformat{
+        display: none;
+    }
+    &-wrapper{
+        position: relative;
+        display: inline-block;
+        min-width: $wrapper_minWidth;
+        max-width: $wrapper_maxWidth;
+    }
+    &-button{
+        @include noHighlight;
+        position: relative;
+        cursor: pointer;
+        background: #20b390;
+        border-radius: 2px 2px 0 0;
+        overflow: hidden;
+    
+        &.disabled{
+            color: #178067;
+        }
+        &-closed{
+            border-radius: 2px;
+        }
+        &-label{
+            color: #FFF;
+            font-size: $button_label_fontSize;
+            padding: $button_label_padding $button_arrow_width+$button_label_padding $button_label_padding $button_label_padding;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        &-arrow{
+            display: inline-block;
+            width: $button_arrow_width;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: #1da585;
+            
+            &-mark{
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                color: #FFF;
+    
+                &:before {
+                    content: ' ';
+                    background: url(images/arrow-mark.svg);
+                    transition: 0.2s transform;
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    transform: rotate(90deg);
+                }
+                .e-select-button-closed &{
+                    
+                    &:before{
+                        transform: rotate(0);
+                        transition: 0.2s transform;
+                    }
+                }
+            }
+        }
+    }
+    &-dropdown{
+        position: absolute;
+        left: 0;
+        min-width: 100%;
+        background: #29cba4;
+        border-radius: 0 0 2px 2px;
+        padding: $dropdown_padding;
+        z-index: 1;
+        transition: 0.2s height;
+        overflow: hidden;
+        
+        &-closed{
+            transition: 0.2s height;
+            height: 0;
+        }
+        &-container{
+        
+        }
+    }
+    &-option{
+        @include noHighlight;
+        cursor: pointer;
+        color: #FFF;
+        padding: $option_padding;
+        font-size: $option_fontSize;
+        
+        &.selected{
+            cursor: default;
+            background: #177e66;
+        }
+        &:hover,
+        &:active,
+        &:focus{
+            background: #1a8d72;
+        }
+    }
+}

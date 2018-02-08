@@ -1,0 +1,16 @@
+{
+  "name": "e-select",
+  "version": "0.0.1",
+  "description": "Extendable select for those, who doesn't like overriding everything in a select plugin.",
+  "main": "src/ESelect/ESelect.js",
+  "scripts": {
+    "sass.watch": "gulp sass.watch",
+    "sass": "gulp sass"
+  },
+  "author": "Jason' Krot",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "node-sass": "^4.7.2"
+  }
+}
