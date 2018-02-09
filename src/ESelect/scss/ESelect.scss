@@ -66,16 +66,16 @@ $option_fontSize: 12px;
                     content: ' ';
                     background: url(images/arrow-mark.svg);
                     transition: 0.2s transform;
+                    transform: scaleY(1);
                     display: block;
                     width: 10px;
                     height: 10px;
-                    transform: rotate(90deg);
                 }
                 .e-select-button-closed &{
                     
                     &:before{
-                        transform: rotate(0);
                         transition: 0.2s transform;
+                        transform: scaleY(-1);
                     }
                 }
             }
