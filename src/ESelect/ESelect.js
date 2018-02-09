@@ -243,32 +243,33 @@ var ESelect = (function(){
     };
     
     var _initialize = function(selectorElement, settings){
-        var element = typeof selectorElement === 'string' ? document.querySelector(selectorElement) : selectorElement;
-        var newSettings = {};
-        for(var setting in possibleSettings){
-            newSettings[setting] = settings && settings[setting] ? settings[setting] : possibleSettings[setting];
+        var elements = typeof selectorElement === 'string' ? document.querySelectorAll(selectorElement) : selectorElement;
+        var returnDatas = [];
+        for(var i = 0; i < elements.length; ++i){
+            if(elements[i].tagName === 'SELECT'){
+                var newSettings = {};
+                for(var setting in possibleSettings){
+                    newSettings[setting] = settings && settings[setting] ? settings[setting] : possibleSettings[setting];
+                }
+    
+                elements[i].eSelect = new ESelectBase(elements[i], newSettings);
+                elements[i].eSelect.original.style.display = elements[i].style.display;
+    
+                elements[i].style.display = 'none';
+    
+                elements[i].eSelect.build();
+                returnDatas.push(elements[i]);
+            }
         }
-        if(element){
-            element.eSelect = new ESelectBase(element, newSettings);
-            
-            element.eSelect.original.style.display = element.style.display;
-            element.style.display = 'none';
-            
-            element.eSelect.build();
-            return element;
-        }else{
-            throw new Error('Cannot select the given elements: ' + selector);
-        }
+        return returnDatas.length ? (returnDatas.length > 1 ? returnDatas : returnDatas[0]) : null;
     };
     
     var _destroy = function(selectorElement){
-        var element = typeof selectorElement === 'string' ? document.querySelector(selectorElement) : selectorElement;
-        if(element){
+        var elements = typeof selectorElement === 'string' ? document.querySelectorAll(selectorElement) : selectorElement;
+        for(var i = 0; i < elements.length; ++i){
             if('eSelect' in element){
                 element.eSelect.destroy();
             }
-        }else{
-            throw new Error('Cannot select the given elements: ' + selector);
         }
     };
     
@@ -278,7 +279,7 @@ var ESelect = (function(){
     };
 })();
 
-var exampleNormalElement;
+var exampleNormalElements;
 document.addEventListener("DOMContentLoaded", function() {
-    exampleNormalElement = ESelect.initialize('#example-normal');
+    exampleNormalElements = ESelect.initialize('.example-normal');
 });
