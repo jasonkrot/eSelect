@@ -187,12 +187,12 @@ var ESelect = (function(){
         };
         this.events = new EventListenerHandler(['onInit', 'onChange', 'onDestroy']);
         this.destroy = function(){
+            var originalSelectDisplay = element.eSelect.original.style.display;
             document.removeEventListener('click', element.eSelect.wrapper.closeOnOffClick);
-        
-            delete element.eSelect;
             element.eSelect.pluginElements.button.removeEventListener('click', element.eSelect.dropdown.toggle);
-            element.parentNode.removeChild(element.eSelect.pluginElements.button);
-            element.parentNode.removeChild(element.eSelect.pluginElements.dropdown);
+            element.parentNode.removeChild(element.eSelect.pluginElements.wrapper);
+            delete element.eSelect;
+            element.style.display = originalSelectDisplay;
         };
         this.dropdown = {
             open: function(event){
@@ -229,6 +229,9 @@ var ESelect = (function(){
                 element.eSelect.change(event.target.dataset.value);
             }
         };
+        this.original = {
+            style: {}
+        };
         this.element = element;
         this.eSelectId = _helpers.getNewElementIdNumber();
         this.pluginElements = {};
@@ -248,6 +251,7 @@ var ESelect = (function(){
         if(element){
             element.eSelect = new ESelectBase(element, newSettings);
             
+            element.eSelect.original.style.display = element.style.display;
             element.style.display = 'none';
             
             element.eSelect.build();
@@ -257,8 +261,20 @@ var ESelect = (function(){
         }
     };
     
+    var _destroy = function(selectorElement){
+        var element = typeof selectorElement === 'string' ? document.querySelector(selectorElement) : selectorElement;
+        if(element){
+            if('eSelect' in element){
+                element.eSelect.destroy();
+            }
+        }else{
+            throw new Error('Cannot select the given elements: ' + selector);
+        }
+    };
+    
     return {
-        initialize: _initialize
+        initialize: _initialize,
+        destroy: _destroy
     };
 })();
 
