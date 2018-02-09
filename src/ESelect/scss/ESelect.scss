@@ -9,9 +9,11 @@ $wrapper_maxWidth: 200px;
 $button_arrow_width: 15px;
 
 $dropdown_padding: 0px;
+$dropdown_transitionSpeed: 0.2s;
 
 $option_padding: 5px;
 $option_fontSize: 12px;
+
 
 .e-select{
     
@@ -37,6 +39,8 @@ $option_fontSize: 12px;
         }
         &-closed{
             border-radius: 2px;
+            transition: 0s border-radius;
+            transition-delay: $dropdown_transitionSpeed;
         }
         &-label{
             color: #FFF;
@@ -65,7 +69,7 @@ $option_fontSize: 12px;
                 &:before {
                     content: ' ';
                     background: url(images/arrow-mark.svg);
-                    transition: 0.2s transform;
+                    transition: $dropdown_transitionSpeed transform;
                     transform: scaleY(1);
                     display: block;
                     width: 10px;
@@ -74,7 +78,7 @@ $option_fontSize: 12px;
                 .e-select-button-closed &{
                     
                     &:before{
-                        transition: 0.2s transform;
+                        transition: $dropdown_transitionSpeed transform;
                         transform: scaleY(-1);
                     }
                 }
@@ -89,11 +93,11 @@ $option_fontSize: 12px;
         border-radius: 0 0 2px 2px;
         padding: $dropdown_padding;
         z-index: 1;
-        transition: 0.2s height;
+        transition: $dropdown_transitionSpeed height;
         overflow: hidden;
         
         &-closed{
-            transition: 0.2s height;
+            transition: $dropdown_transitionSpeed height;
             height: 0;
         }
         &-container{
